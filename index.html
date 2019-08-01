@@ -1,0 +1,24 @@
+<!DOCTYPE html>
+<html lang="en">
+    <head>
+        <title>This Wire</title>
+        <meta charset="utf-8">
+        <link rel="stylesheet" href="style.css">
+        <script src="https://cdn.jsdelivr.net/npm/socket.io-client@2.2.0/dist/socket.io.js"></script>
+        <script src="https://vuejs.org/js/vue.js"></script>
+        <script src="https://cdn.jsdelivr.net/npm/markdown-it/dist/markdown-it.min.js"></script>
+        <script src="https://cdn.jsdelivr.net/npm/axios@0.19.0/dist/axios.min.js"></script>
+        <script src="https://cdn.jsdelivr.net/npm/vue-async-computed@3.7.0/dist/vue-async-computed.js"></script>
+        <script src="client.js" defer></script>
+    </head>
+    <body>
+        <div id="messages">
+            <message v-for="message in messages" v-bind:message="message" v-bind:key="message.id"></message>
+        </div>
+        <br>
+        <div id="message-sender">
+            <textarea v-model="message" placeholder="Type something here..." :disabled="!loggedIn"></textarea>
+            <button @click="sendMessage" :disabled="!loggedIn">Send</button>
+        </div>
+    </body>
+</html>
