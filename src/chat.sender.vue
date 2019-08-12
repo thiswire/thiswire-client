@@ -1,13 +1,13 @@
 <template>
-  <div>
-    <textarea
-      v-model="message"
-      placeholder="Type something here..."
-      :disabled="!loggedIn"
-      @keydown="handleInput"
-    ></textarea>
-    <button @click="sendMessage" :disabled="!loggedIn">Send</button>
-  </div>
+    <div>
+        <textarea
+            v-model="message"
+            placeholder="Type something here..."
+            :disabled="!loggedIn"
+            @keydown="handleInput"
+            id="input-textarea"
+        ></textarea>
+    </div>
 </template>
 
 <script>
@@ -55,3 +55,19 @@ export default {
     }
 };
 </script>
+
+<style scoped>
+    #input-textarea {
+        margin-top: -10px;
+        resize: none;
+        width: 90vw;
+        background: rgb(85, 85, 85);
+        border: none;
+        border-radius: 10px;
+        color: #fff;
+        font-family: 'Heebo', sans-serif;
+        font-size: 0.8em;
+        padding-left: 10px;
+        padding-top: 10px;
+    }
+</style>

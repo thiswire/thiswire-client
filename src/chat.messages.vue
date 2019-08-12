@@ -1,5 +1,5 @@
 <template>
-  <div>
+  <div id="messages-div">
     <message
       v-for="message in messages"
       v-bind:message="message"
@@ -31,3 +31,10 @@ export default {
     }
 };
 </script>
+
+<style scoped>
+    #messages-div {
+        height: 90vh;
+        overflow: auto;
+    }
+</style>
