@@ -4,6 +4,7 @@
       v-model="message"
       placeholder="Type something here..."
       :disabled="!loggedIn"
+      @keydown="handleInput"
     ></textarea>
     <button @click="sendMessage" :disabled="!loggedIn">Send</button>
   </div>
@@ -22,8 +23,14 @@ export default {
     },
     computed: mapState(["socket"]),
     methods: {
+    handleInput(event) {
+        if (event.code === 'Enter' && !event.shiftKey){
+            event.preventDefault();
+            this.sendMessage();
+        }
+    },
     sendMessage() {
-        if (this.message == "") return;
+        if (this.message.trim() == "") return;
         this.socket.emit("chat message", {
             text: this.message
         });
