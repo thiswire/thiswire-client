@@ -13,10 +13,10 @@
 <script>
 import { mapState } from 'vuex';
 export default {
-    name: "message-sender",
+    name: 'message-sender',
     data: () => {
         return {
-            message: "",
+            message: '',
             loggedIn: false,
             user: {}
         };
@@ -24,28 +24,28 @@ export default {
     computed: mapState(['socket', 'currentChannel']),
     methods: {
         handleInput(event) {
-            if (event.code === 'Enter' && !event.shiftKey){
+            if (event.code === 'Enter' && !event.shiftKey) {
                 event.preventDefault();
                 this.sendMessage();
             }
         },
         sendMessage() {
-            if (this.message.trim() == "" || !this.currentChannel) return;
-            this.socket.emit("chat message", {
+            if (this.message.trim() == '' || !this.currentChannel) return;
+            this.socket.emit('chat message', {
                 text: this.message,
                 channel: this.currentChannel
             });
-            this.message = "";
+            this.message = '';
         },
         login() {
-            if (!localStorage.getItem("name")) {
-                window.location.replace("login.html");
+            if (!localStorage.getItem('name')) {
+                window.location.replace('login.html');
                 return;
             } else {
-                this.user.name = localStorage.getItem("name");
+                this.user.name = localStorage.getItem('name');
             }
-            this.socket.emit("login", this.user, user => {
-                if (user.type === "error") return;
+            this.socket.emit('login', this.user, user => {
+                if (user.type === 'error') return;
                 this.loggedIn = true;
                 this.user = user;
             });
@@ -58,17 +58,17 @@ export default {
 </script>
 
 <style scoped>
-    #input-textarea {
-        margin-top: -10px;
-        resize: none;
-        width: 90vw;
-        background: rgb(85, 85, 85);
-        border: none;
-        border-radius: 10px;
-        color: #fff;
-        font-family: 'Heebo', sans-serif;
-        font-size: 0.8em;
-        padding-left: 10px;
-        padding-top: 10px;
-    }
+#input-textarea {
+    margin-top: -10px;
+    resize: none;
+    width: 90vw;
+    background: rgb(85, 85, 85);
+    border: none;
+    border-radius: 10px;
+    color: #fff;
+    font-family: 'Heebo', sans-serif;
+    font-size: 0.8em;
+    padding-left: 10px;
+    padding-top: 10px;
+}
 </style>

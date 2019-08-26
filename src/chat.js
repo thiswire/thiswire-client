@@ -24,13 +24,20 @@ const store = new Vuex.Store({
             state.guilds = payload.guilds;
             for (let guild of payload.guilds) {
                 for (let channel of guild.channels) {
-                    if (!state.channels[channel]) state.channels[channel] = {name: null, messages: []};
-                    axios.get(process.env.VUE_APP_SERVER_URL + '/getChannel', {params: {id: channel}}).then(response => {
-                        console.log('Got channel!!', response.data);
-                        if (response.data.type === 'error') return;
-                        // state.channels[channel].name = response.data.name;
-                        this.commit('setChannelName', {channel, name: response.data.name});
-                    });
+                    if (!state.channels[channel])
+                        state.channels[channel] = { name: null, messages: [] };
+                    axios
+                        .get(process.env.VUE_APP_SERVER_URL + '/getChannel', {
+                            params: { id: channel }
+                        })
+                        .then(response => {
+                            if (response.data.type === 'error') return;
+                            // state.channels[channel].name = response.data.name;
+                            this.commit('setChannelName', {
+                                channel,
+                                name: response.data.name
+                            });
+                        });
                 }
             }
         },
@@ -41,9 +48,9 @@ const store = new Vuex.Store({
         addMessage(state, msg) {
             let channel = state.channels[msg.channel];
             if (!channel) {
-                state.channels[msg.channel] = {name: null, messages: []}
+                state.channels[msg.channel] = { name: null, messages: [] };
                 channel = state.channels[msg.channel];
-            };
+            }
             channel.messages.push(msg);
             return true;
         }
@@ -53,10 +60,10 @@ const store = new Vuex.Store({
 store.commit('connect');
 axios.get(process.env.VUE_APP_SERVER_URL + '/getGuilds').then(response => {
     if (response.data.type === 'error') return;
-    store.commit('getGuilds', {guilds: response.data});
-})
+    store.commit('getGuilds', { guilds: response.data });
+});
 new Vue({
-    el: "#app",
+    el: '#app',
     store,
     render: h => h(App)
 });

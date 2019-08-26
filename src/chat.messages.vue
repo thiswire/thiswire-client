@@ -1,18 +1,18 @@
 <template>
-  <div id="messages-div">
-    <message
-      v-for="message in messages"
-      v-bind:message="message"
-      v-bind:key="message.id"
-    ></message>
-  </div>
+    <div id="messages-div">
+        <message
+            v-for="message in messages"
+            v-bind:message="message"
+            v-bind:key="message.id"
+        ></message>
+    </div>
 </template>
 
 <script>
 import message from './components/message.vue';
 import { mapState } from 'vuex';
 export default {
-    name: "messages",
+    name: 'messages',
     components: {
         message
     },
@@ -22,7 +22,7 @@ export default {
         };
     },
     computed: {
-        ...mapState(["channels",'currentChannel']),
+        ...mapState(['channels', 'currentChannel']),
         messages() {
             let channel = this.channels[this.currentChannel];
             if (!channel) return [];
@@ -40,8 +40,8 @@ export default {
 </script>
 
 <style scoped>
-    #messages-div {
-        height: 90vh;
-        overflow: auto;
-    }
+#messages-div {
+    height: 90vh;
+    overflow: auto;
+}
 </style>
