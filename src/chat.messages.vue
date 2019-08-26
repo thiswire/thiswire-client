@@ -21,7 +21,14 @@ export default {
             autoScroll: true
         };
     },
-    computed: mapState(["messages"]),
+    computed: {
+        ...mapState(["channels",'currentChannel']),
+        messages() {
+            let channel = this.channels[this.currentChannel];
+            if (!channel) return [];
+            return channel.messages;
+        }
+    },
     updated() {
         this.$nextTick(function() {
             if (this.autoScroll) {

@@ -21,34 +21,35 @@ export default {
             user: {}
         };
     },
-    computed: mapState(["socket"]),
+    computed: mapState(['socket', 'currentChannel']),
     methods: {
-    handleInput(event) {
-        if (event.code === 'Enter' && !event.shiftKey){
-            event.preventDefault();
-            this.sendMessage();
+        handleInput(event) {
+            if (event.code === 'Enter' && !event.shiftKey){
+                event.preventDefault();
+                this.sendMessage();
+            }
+        },
+        sendMessage() {
+            if (this.message.trim() == "" || !this.currentChannel) return;
+            this.socket.emit("chat message", {
+                text: this.message,
+                channel: this.currentChannel
+            });
+            this.message = "";
+        },
+        login() {
+            if (!localStorage.getItem("name")) {
+                window.location.replace("login.html");
+                return;
+            } else {
+                this.user.name = localStorage.getItem("name");
+            }
+            this.socket.emit("login", this.user, user => {
+                if (user.type === "error") return;
+                this.loggedIn = true;
+                this.user = user;
+            });
         }
-    },
-    sendMessage() {
-        if (this.message.trim() == "") return;
-        this.socket.emit("chat message", {
-            text: this.message
-        });
-        this.message = "";
-    },
-    login() {
-        if (!localStorage.getItem("name")) {
-            window.location.replace("login.html");
-            return;
-        } else {
-            this.user.name = localStorage.getItem("name");
-        }
-        this.socket.emit("login", this.user, user => {
-            if (user.type === "error") return;
-            this.loggedIn = true;
-            this.user = user;
-        });
-    }
     },
     beforeMount() {
         this.login();
