@@ -41,7 +41,7 @@ export default {
 
 <style scoped>
 #messages-div {
-    height: 90vh;
+    height: 80vh;
     overflow: auto;
 }
 </style>

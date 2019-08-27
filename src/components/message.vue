@@ -1,13 +1,28 @@
 <template>
-    <div class="message-parent">
-        <img class="message-pfp" src="../assets/default_pfp.png" />
+    <!-- <div class="message-parent">
+        <img class="message-pfp"  />
         <div>
             <span class="message-nickname">{{ author.name }}</span>
             <span class="message-time">{{ timestampstr }}</span>
             <br />
             <div class="message-text" v-html="content"></div>
         </div>
-    </div>
+    </div> -->
+    <article class="media">
+        <figure class="media-left">
+            <p class="image is-64x64">
+                <img class="is-rounded" src="../assets/default_pfp.png" />
+            </p>
+        </figure>
+        <div class="media-content">
+            <div class="content">
+                <strong class="has-text-white">{{ author.name }}</strong>
+                <small class="is-size-7 has-text-grey message-time">{{ timestampstr }}</small>
+                <br />
+                <div v-html="content"></div>
+            </div>
+        </div>
+    </article>
 </template>
 
 <script>
@@ -64,3 +79,8 @@ export default {
     }
 };
 </script>
+<style lang="scss" scoped>
+.message-time {
+    margin-left: 1em;
+}
+</style>
