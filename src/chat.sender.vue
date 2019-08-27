@@ -1,14 +1,14 @@
 <template>
     <div>
         <div class="control">
-        <textarea
-            class="textarea has-fixed-size"
-            v-model="message"
-            placeholder="Type something here..."
-            :disabled="!loggedIn"
-            @keydown="handleInput"
-            id="input-textarea"
-        ></textarea>
+            <textarea
+                class="textarea has-fixed-size"
+                v-model="message"
+                placeholder="Type something here..."
+                :disabled="!loggedIn"
+                @keydown="handleInput"
+                id="input-textarea"
+            ></textarea>
         </div>
     </div>
 </template>

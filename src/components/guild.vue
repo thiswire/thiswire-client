@@ -1,11 +1,11 @@
 <template>
     <li>
-        <a 
-        class="tooltip is-tooltip-right"
-        v-bind:class="{ 'is-active': active }"
-        v-bind:data-tooltip="guild.name"
-        @click="selectGuild"
-        style="padding-left: 0;"
+        <a
+            class="tooltip is-tooltip-right"
+            v-bind:class="{ 'is-active': active }"
+            v-bind:data-tooltip="guild.name"
+            @click="selectGuild"
+            style="padding-left: 0;"
         >
             <p class="image is-48x48">
                 <img class="is-rounded" src="../assets/default_pfp.png" />

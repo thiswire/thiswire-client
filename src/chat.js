@@ -16,7 +16,6 @@ Vue.component('fa-icon', FontAwesomeIcon);
 Vue.use(Vuex);
 Vue.use(asyncComputed);
 
-
 const store = new Vuex.Store({
     state: {
         socket: null,

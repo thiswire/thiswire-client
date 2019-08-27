@@ -17,7 +17,9 @@
         <div class="media-content">
             <div class="content">
                 <strong class="has-text-white">{{ author.name }}</strong>
-                <small class="is-size-7 has-text-grey message-time">{{ timestampstr }}</small>
+                <small class="is-size-7 has-text-grey message-time">{{
+                    timestampstr
+                }}</small>
                 <br />
                 <div v-html="content"></div>
             </div>
