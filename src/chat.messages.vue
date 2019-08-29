@@ -1,8 +1,9 @@
 <template>
     <div id="messages-div">
         <message
-            v-for="message in messages"
+            v-for="(message, i) in messages"
             v-bind:message="message"
+            v-bind:index="i"
             v-bind:key="message.id"
         ></message>
     </div>

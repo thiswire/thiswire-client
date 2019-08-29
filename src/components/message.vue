@@ -1,17 +1,11 @@
 <template>
-    <!-- <div class="message-parent">
-        <img class="message-pfp"  />
-        <div>
-            <span class="message-nickname">{{ author.name }}</span>
-            <span class="message-time">{{ timestampstr }}</span>
-            <br />
-            <div class="message-text" v-html="content"></div>
-        </div>
-    </div> -->
-    <article class="media">
+    <article class="media" v-if="!shouldConnect">
         <figure class="media-left">
-            <p class="image is-64x64">
-                <img class="is-rounded" src="../assets/default_pfp.png" />
+            <p class="image">
+                <img
+                    class="is-rounded message-pfp"
+                    src="../assets/default_pfp.png"
+                />
             </p>
         </figure>
         <div class="media-content">
@@ -25,13 +19,14 @@
             </div>
         </div>
     </article>
+    <div v-else v-html="content" class="message-connected"></div>
 </template>
 
 <script>
 import axios from 'axios';
 import markdownit from 'markdown-it';
+import { mapState } from 'vuex';
 
-console.log('This should only appear once!');
 const userCache = {};
 const pendingRequests = {};
 const serverUrl = process.env.VUE_APP_SERVER_URL;
@@ -43,13 +38,31 @@ const md = markdownit({
 
 export default {
     name: 'message',
-    props: ['message'],
+    props: ['message', 'index'],
     computed: {
+        ...mapState(['channels', 'currentChannel']),
+        date() {
+            return new Date(this.message.timestamp);
+        },
         timestampstr() {
-            return new Date(this.message.timestamp).toDateString();
+            return this.date.toDateString();
         },
         content() {
             return md.renderInline(this.message.text);
+        },
+        lastMessage() {
+            if (this.index === 0) return;
+            let channel = this.channels[this.currentChannel];
+            if (!channel) return;
+            else return channel.messages[this.index - 1];
+        },
+        shouldConnect() {
+            let last = this.lastMessage;
+            if (!last) return false;
+            return (
+                last.author === this.message.author &&
+                this.date.getHours() === new Date(last.timestamp).getHours()
+            );
         }
     },
     asyncComputed: {
@@ -82,7 +95,15 @@ export default {
 };
 </script>
 <style lang="scss" scoped>
+$image-size: 3em;
 .message-time {
     margin-left: 1em;
+}
+.message-pfp {
+    height: $image-size;
+}
+.message-connected {
+    margin-left: $image-size + 1em;
+    margin-bottom: 0.1em;
 }
 </style>
