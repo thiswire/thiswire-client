@@ -101,6 +101,7 @@ $image-size: 3em;
 }
 .message-pfp {
     height: $image-size;
+    width: $image-size;
 }
 .message-connected {
     margin-left: $image-size + 1em;
