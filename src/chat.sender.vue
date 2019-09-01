@@ -17,14 +17,13 @@
 import { mapState } from 'vuex';
 export default {
     name: 'message-sender',
-    data: () => {
+    data() {
         return {
             message: '',
-            loggedIn: false,
             user: {}
         };
     },
-    computed: mapState(['socket', 'currentChannel']),
+    computed: mapState(['socket', 'currentChannel', 'loggedIn']),
     methods: {
         handleInput(event) {
             if (event.code === 'Enter' && !event.shiftKey) {
@@ -39,23 +38,7 @@ export default {
                 channel: this.currentChannel
             });
             this.message = '';
-        },
-        login() {
-            if (!localStorage.getItem('name')) {
-                window.location.replace('login.html');
-                return;
-            } else {
-                this.user.name = localStorage.getItem('name');
-            }
-            this.socket.emit('login', this.user, user => {
-                if (user.type === 'error') return;
-                this.loggedIn = true;
-                this.user = user;
-            });
         }
-    },
-    beforeMount() {
-        this.login();
     }
 };
 </script>

@@ -1,7 +1,8 @@
-document.getElementById('login').onclick = () => {
-    let name = document.getElementById('name').value;
-    if (name != '') {
-        localStorage.setItem('name', name);
-        window.location.href = 'chat.html';
-    }
-};
+'use strict';
+import Vue from 'vue';
+import App from './login.vue';
+
+new Vue({
+    el: '#app',
+    render: h => h(App)
+});

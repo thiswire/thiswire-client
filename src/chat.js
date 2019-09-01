@@ -19,6 +19,7 @@ Vue.use(asyncComputed);
 const store = new Vuex.Store({
     state: {
         socket: null,
+        loggedIn: false,
         currentChannel: null,
         currentGuild: null,
         guilds: [],
@@ -76,11 +77,24 @@ const store = new Vuex.Store({
             }
             channel.messages.push(msg);
             return true;
+        },
+        login(state) {
+            if (!localStorage.getItem('token')) {
+                window.location.replace('login.html');
+            } else {
+                let token = localStorage.getItem('token');
+                state.socket.emit('login', token);
+                state.socket.on('logged in', () => this.commit('loggedIn'));
+            }
+        },
+        loggedIn(state) {
+            state.loggedIn = true;
         }
     }
 });
 
 store.commit('connect');
+store.commit('login');
 axios.get(process.env.VUE_APP_SERVER_URL + '/getGuilds').then(response => {
     if (response.data.type === 'error') return;
     store.commit('setGuilds', { guilds: response.data });
